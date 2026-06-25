@@ -208,6 +208,34 @@ Build the Docker image:
 docker build -t fr3-docker .
 ```
 
+```
+If fail to build doker image:
+
+find possible issues:
+```bash
+sudo docker build -t fr3-docker -f Dockerfile . --progress=plain
+```
+
+Like it is failing at:
+
+librealsense.intel.com
+reason: librealsense repo does NOT support your Ubuntu version (very likely Ubuntu 22.04/24.04 mismatch)
+
+```bash
+Check theri ubuntu version in dockerfile
+```
+or go to dockefile and delete unesscessry code (eg: as NOT using a RealSense camera: SKIP RealSense)
+
+```bash
+https://github.com/ualberta-robotics/franka-docker/blob/main/Dockerfile
+```
+find:
+```bash
+#mkdir -p /etc/apt/keyrings && \
+     curl -sSf https://librealsense.intel.com/Debian/librealsense.pgp | \
+         tee /etc/apt/keyrings/librealsense.pgp > /dev/null && \
+```
+
 ---
 
 # Run the Docker Container
