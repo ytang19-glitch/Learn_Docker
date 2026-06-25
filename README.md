@@ -137,6 +137,14 @@ Expected output:
 ```text
 Active: active (running)
 ```
+if not:
+
+```text
+sudo systemctl daemon-reload
+sudo systemctl restart docker.socket
+sudo systemctl restart docker.service
+```
+
 
 ---
 
