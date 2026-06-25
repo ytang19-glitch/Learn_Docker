@@ -1,0 +1,143 @@
+# Docker Service Failed to Start — Root Cause and Fix
+
+## Problem
+
+Docker service failed to start with:
+
+```text
+failed to load listeners: no sockets found via socket activation:
+make sure the service was started by systemd
+```
+
+Systemd logs showed:
+
+```text
+docker.service: Main process exited, code=exited, status=1/FAILURE
+```
+
+---
+
+# Root Cause
+
+Docker was configured to use systemd socket activation:
+
+```text
+-H fd://
+```
+
+This means:
+
+* `dockerd` expects systemd to provide an already-open socket
+* the socket is managed by `docker.socket`
+* if `docker.socket` is missing, disabled, or not running,
+  Docker cannot create its listener
+* therefore the daemon exits immediately
+
+The failure was not caused by:
+
+* containers
+* images
+* storage corruption
+* networking
+* disk space
+
+It was specifically a broken or inactive `docker.socket`.
+
+---
+
+# How Docker Socket Activation Works
+
+Systemd starts:
+
+```text
+docker.socket
+```
+
+which creates:
+
+```text
+/run/docker.sock
+```
+
+Then systemd launches:
+
+```text
+docker.service
+```
+
+and passes the socket file descriptor to `dockerd`.
+
+If the socket is unavailable, Docker prints:
+
+```text
+failed to load listeners: no sockets found via socket activation
+```
+
+and exits with status code `1`.
+
+---
+
+# Fix
+
+## Restart socket and service
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart docker.socket
+sudo systemctl restart docker.service
+```
+
+---
+
+## Enable socket permanently
+
+```bash
+sudo systemctl enable docker.socket
+sudo systemctl start docker.socket
+sudo systemctl start docker
+```
+
+---
+
+# Verification
+
+Check service status:
+
+```bash
+sudo systemctl status docker
+sudo systemctl status docker.socket
+```
+
+Check Docker functionality:
+
+```bash
+docker ps
+```
+
+---
+
+# Expected Working Configuration
+
+The Docker service should contain:
+
+```ini
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+```
+
+The Docker socket should contain something similar to:
+
+```ini
+[Socket]
+ListenStream=/run/docker.sock
+SocketMode=0660
+SocketUser=root
+SocketGroup=docker
+```
+
+---
+
+# Summary
+
+Docker failed because `dockerd` was configured to receive its socket from systemd, but `docker.socket` was unavailable.
+
+Restarting/enabling `docker.socket` restored the socket activation chain and allowed Docker to start normally.
