@@ -208,23 +208,59 @@ Build the Docker image:
 docker build -t fr3-docker .
 ```
 
-```
 If fail to build doker image:
 
-find possible issues:
+# Docker Build Troubleshooting
+
+## Build the Docker Image
+
+Run the following command in the directory containing the `Dockerfile`:
+
+```bash
+docker build -t fr3-docker .
+```
+
+* `-t fr3-docker` assigns the image name.
+* `.` uses the current directory as the build context.
+
+---
+
+## If the Build Fails
+
+Rebuild with detailed logs:
+
 ```bash
 sudo docker build -t fr3-docker -f Dockerfile . --progress=plain
 ```
 
-Like it is failing at:
+This displays the full build output, making it easier to identify the step that failed.
 
-librealsense.intel.com
-reason: librealsense repo does NOT support your Ubuntu version (very likely Ubuntu 22.04/24.04 mismatch)
+---
 
-```bash
-Check theri ubuntu version in dockerfile
+## Common Issue: Intel RealSense
+
+If the build fails while accessing `librealsense.intel.com`, the RealSense repository may not support the Ubuntu version used in the Docker image.
+
+### Solution
+
+1. Check the Ubuntu version in the `Dockerfile`:
+
+```dockerfile
+FROM ubuntu:22.04
 ```
-or go to dockefile and delete unesscessry code (eg: as NOT using a RealSense camera: SKIP RealSense)
+
+2. If your project does **not** use an Intel RealSense  camera, remove or comment out the RealSense installation and repository setup in the `Dockerfile`.
+
+---
+
+## Troubleshooting Checklist
+
+* Build with `--progress=plain`.
+* Identify the first failing command.
+* Verify the Ubuntu version in the `Dockerfile`.
+* Remove unnecessary dependencies (e.g., RealSense) if they are not required.
+* Rebuild the Docker image.
+
 
 ```bash
 https://github.com/ualberta-robotics/franka-docker/blob/main/Dockerfile
@@ -236,7 +272,6 @@ find:
          tee /etc/apt/keyrings/librealsense.pgp > /dev/null && \
 ```
 
----
 
 # Run the Docker Container
 
