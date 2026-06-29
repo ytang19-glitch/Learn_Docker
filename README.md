@@ -286,7 +286,9 @@ find:
   fr3-docker
 ```
 * Rebuild it after any change on dockerfile
-* 
+So when you run the container, Docker is still using:the OLD image
+(which still contains source setup.bash and the old configuration)
+  
 ```bash
 cd ~/franka-docker
 ```
