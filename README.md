@@ -279,7 +279,8 @@ find:
 ```
 * debug source setup.bash
   observe controller_manager
-  check environment variable 
+  check environment variable
+  
   open terminal inside container
 
  ```bash 
