@@ -141,3 +141,123 @@ SocketGroup=docker
 Docker failed because `dockerd` was configured to receive its socket from systemd, but `docker.socket` was unavailable.
 
 Restarting/enabling `docker.socket` restored the socket activation chain and allowed Docker to start normally.
+
+
+
+
+
+```````
+
+Exact problem line causing your crash:
+
+❌ THE ROOT CAUSE (confirmed)
+
+In your Dockerfile:
+
+RUN echo "source /home/user/franka-docker/franka_ws/install/setup.bash" >> ~/.bashrc
+💥 Why this breaks everything
+
+At Docker build/run time, this line forces:
+
+container starts
+→ .bashrc runs automatically
+→ tries to source setup.bash
+→ BUT install/ does not exist yet
+→ CRASH
+
+That is exactly your error:
+
+No such file or directory: install/setup.bash
+🧠 Important insight
+
+You already proved:
+
+install/setup.bash EXISTS on host ✔
+
+But Docker is:
+
+👉 expecting it at startup BEFORE anything is built or verified
+
+🔧 THE CORRECT FIX
+❌ REMOVE this line completely:
+source /home/user/franka-docker/franka_ws/install/setup.bash
+✅ Replace with SAFE version:
+Option 1 (BEST practice):
+
+Do NOT auto-source anything:
+
+# workspace will be sourced manually after colcon build
+Option 2 (if you REALLY want auto-source)
+
+Only if you're 100% sure build always happens:
+
+RUN echo "if [ -f /home/user/franka-docker/franka_ws/install/setup.bash ]; then source /home/user/franka-docker/franka_ws/install/setup.bash; fi" >> ~/.bashrc
+
+This prevents crash.
+
+🚨 WHY YOUR CURRENT SETUP IS BAD
+
+You are doing:
+
+Docker starts
+→ expects ROS workspace already built
+→ but build is not guaranteed
+→ crash
+🧠 Correct ROS2 + Docker logic
+
+Proper flow should be:
+
+1. start container
+2. build workspace (colcon build)
+3. THEN source install/setup.bash
+
+NOT reverse.
+
+🔥 ALSO IMPORTANT (you have another hidden risk)
+
+This line:
+
+source /opt/ros/$ROS_DISTRO/setup.bash
+
+is OK ✔
+
+BUT ONLY if:
+
+ROS_DISTRO = jazzy
+
+Make sure this is correct:
+
+echo $ROS_DISTRO
+🚀 FINAL FIX SUMMARY
+You MUST change:
+# REMOVE THIS
+source /home/user/franka-docker/franka_ws/install/setup.bash
+Keep:
+ROS Jazzy setup ✔
+OpenRobot env ✔
+PATH / LD_LIBRARY_PATH ✔
+🧠 Why this solves EVERYTHING
+
+After removing that line:
+
+Docker starts clean ✔
+no missing setup.bash crash ✔
+you manually control ROS environment ✔
+
+``````````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
