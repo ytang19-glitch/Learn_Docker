@@ -208,6 +208,11 @@ Build the Docker image:
 docker build -t fr3-docker .
 ```
 
+# Step 10. Vertify the successful installation of docker image
+
+```bash
+sudo docker images
+```
 
 # Mscs: Docker Build Troubleshooting
 
