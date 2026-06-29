@@ -188,7 +188,7 @@ Buildx provides advanced image-building functionality and is recommended for mod
 
 ---
 
-# Build the FR3 Docker Image
+# Step 9. Build the FR3 Docker Image
 
 Clone the repository:
 
@@ -208,9 +208,10 @@ Build the Docker image:
 docker build -t fr3-docker .
 ```
 
-If fail to build doker image:
 
-# Docker Build Troubleshooting
+# Mesc: Docker Build Troubleshooting
+
+If fail to build doker image:
 
 ## Build the Docker Image
 
