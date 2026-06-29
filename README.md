@@ -285,6 +285,11 @@ find:
   --entrypoint bash \
   fr3-docker
 ```
+* Rebuild it after any change on dockerfile
+If dockerfile is changed, we should rebuild it:
+```bash
+sudo docker build --no-cache -t fr3-docker .
+```
 
 # Run the Docker Container
 
