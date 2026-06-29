@@ -277,18 +277,25 @@ find:
      curl -sSf https://librealsense.intel.com/Debian/librealsense.pgp | \
          tee /etc/apt/keyrings/librealsense.pgp > /dev/null && \
 ```
-
+* Make sure if those command crash
+ ```bash 
+  sudo docker run -it --rm \
+  --network host \
+  --privileged \
+  --entrypoint bash \
+  fr3-docker
+```
 
 # Run the Docker Container
 
 Launch the container:
 
 ```bash
-docker run -it --rm \
-    --network host \
-    --privileged \
-    -v ~/franka-docker/franka_ws:/home/user/franka-docker/franka_ws \
-    fr3-docker
+sudo docker run -it --rm \
+     --network host \
+     --privileged \
+     -v ~/franka-docker/franka_ws:/home/user/franka-docker/franka_ws \
+     fr3-docker
 ```
 
 Parameter explanation:
