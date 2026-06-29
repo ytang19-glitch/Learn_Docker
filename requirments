@@ -1,1 +1,19 @@
-python3 -m pip --version ( pip , python)
+#Python pip
+sudo apt install python3-pip
+python3 -m pip --version ( check version)
+
+
+# venv support
+sudo apt install python3-venv
+
+# Create a virtual environment
+python3 -m venv myenv
+
+# activate
+source myenv/bin/activate
+
+# install packages
+pip install requests
+
+# leave environment
+deactivate
