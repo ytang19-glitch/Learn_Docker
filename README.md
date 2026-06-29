@@ -286,13 +286,17 @@ find:
   fr3-docker
 ```
 * Rebuild it after any change on dockerfile
-So when you run the container, Docker is still using:the OLD image
+  
+As we run the container, Docker is still using:the OLD image
 (which still contains source setup.bash and the old configuration)
+
+Note:
+ Dockerfile → docker build
+ bashrc → source ~/.bashrc
   
 ```bash
 cd ~/franka-docker
 ```
-If dockerfile is changed, we should rebuild it:
 ```bash
 sudo docker build --no-cache -t fr3-docker .
 ```
