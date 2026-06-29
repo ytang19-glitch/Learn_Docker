@@ -209,7 +209,7 @@ docker build -t fr3-docker .
 ```
 
 
-# Mesc: Docker Build Troubleshooting
+# Mscs: Docker Build Troubleshooting
 
 If fail to build doker image:
 
