@@ -277,7 +277,11 @@ find:
      curl -sSf https://librealsense.intel.com/Debian/librealsense.pgp | \
          tee /etc/apt/keyrings/librealsense.pgp > /dev/null && \
 ```
-* Make sure if those command crash
+* debug source setup.bash
+  observe controller_manager
+  check environment variable 
+  open terminal inside container
+
  ```bash 
   sudo docker run -it --rm \
   --network host \
