@@ -287,7 +287,7 @@ Launch the container:
 docker run -it --rm \
     --network host \
     --privileged \
-    -v ~/franka-docker/franka_ws:/home/user/franka-docker/franka_ws
+    -v ~/franka-docker/franka_ws:/home/user/franka-docker/franka_ws \
     fr3-docker
 ```
 
