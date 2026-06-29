@@ -286,6 +286,10 @@ find:
   fr3-docker
 ```
 * Rebuild it after any change on dockerfile
+* 
+```bash
+cd ~/franka-docker
+```
 If dockerfile is changed, we should rebuild it:
 ```bash
 sudo docker build --no-cache -t fr3-docker .
