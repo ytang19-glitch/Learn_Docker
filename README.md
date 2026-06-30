@@ -401,6 +401,11 @@ cd /home/user/franka-docker/franka_ws
 rm -rf build install log
 colcon build
 ```
+make sure franky is available
+```bash
+ros2 pkg list | grep franky
+```
+
 franka_bridge is a communication layer between ROS 2 and the real Franka robot.
 ```bash
 ros2 launch franky_ros franky_bringup.launch.py robot_ip:=192.168.0.1
