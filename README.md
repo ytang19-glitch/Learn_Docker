@@ -374,6 +374,8 @@ sudo docker run -it --rm \
   --entrypoint bash \
   fr3-docker
 ```
+ST
+
 
 Parameter explanation:
 
@@ -386,6 +388,20 @@ Parameter explanation:
 | `-v`             | Mount the local ROS 2 workspace inside the container               |
 
 ---
+
+
+# Step 12. start robot driver
+Check if the docker(humble) is injetced by the host(jazzy)
+```bash
+cat ~/.bashrc | grep ros
+```
+
+franka_bridge is a communication layer between ROS 2 and the real Franka robot.
+```bash
+ros2 launch franky_ros franky_bringup.launch.py robot_ip:=192.168.0.1
+```
+
+
 
 # Verification Purpose
 
