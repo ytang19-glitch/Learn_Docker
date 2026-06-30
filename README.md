@@ -244,9 +244,46 @@ This displays the full build output, making it easier to identify the step that 
 ---
 
 ## Common Issue: Intel RealSense
-
+### Delete useless code 
 If the build fails while accessing `librealsense.intel.com`, the RealSense repository may not support the Ubuntu version used in the Docker image.
 
+### Injection from shell environment into docker
+ROS2 startup script problem caused by the shell environment being injected into Docker
+
+* Wrong configuration
+```bash
+Host (ROS2 Jazzy)
+        │
+        ▼
+Host .bashrc
+(source /opt/ros/jazzy/setup.bash)
+        │
+        ▼
+Docker Container (ROS2 Humble)
+        │
+        ▼
+Jazzy environment is injected
+into the Humble container
+        │
+        ▼
+ROS2 Version Conflicthost environment
+```
+* Correct configuration
+```bash
+  Docker Container (ROS2 Humble)
+        │
+        ▼
+source /opt/ros/humble/setup.bash
+        │
+        ▼
+Use Humble environment only
+        │
+        ▼
+Container remains isolated
+        │
+        ▼
+```
+ROS2 Works Correctly
 ### Solution
 
 1. Check the Ubuntu version in the `Dockerfile`:
@@ -258,6 +295,15 @@ FROM ubuntu:22.04
 2. If your project does **not** use an Intel RealSense  camera, remove or comment out the RealSense installation and repository setup in the `Dockerfile`.
 
 ---
+
+3 Remove ROS 2 Workspace from `.bashrc`
+source ~/franka_ros2_ws/install/setup.bash
+
+Comment out or remove the following line from your host's `.bashrc`:
+
+```bash
+source ~/franka_ros2_ws/install/setup.bash
+```
 
 ## Troubleshooting Checklist
 
@@ -306,7 +352,7 @@ cd ~/franka-docker
 sudo docker build --no-cache -t fr3-docker .
 ```
 
-# Run the Docker Container
+# Steps 11 Run the Docker Container
 
 Launch the container:
 
