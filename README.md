@@ -395,7 +395,12 @@ Check if the docker(humble) is injetced by the host(jazzy)
 ```bash
 cat ~/.bashrc | grep ros
 ```
-
+rebuild workplace of docker:
+```bash
+cd /home/user/franka-docker/franka_ws
+rm -rf build install log
+colcon build
+```
 franka_bridge is a communication layer between ROS 2 and the real Franka robot.
 ```bash
 ros2 launch franky_ros franky_bringup.launch.py robot_ip:=192.168.0.1
