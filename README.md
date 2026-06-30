@@ -356,6 +356,7 @@ sudo docker build --no-cache -t fr3-docker .
 
 Launch the container:
 
+Container starts robot automatically
 ```bash
 sudo docker run -it --rm \
      --network host \
@@ -363,6 +364,17 @@ sudo docker run -it --rm \
      -v ~/franka-docker/franka_ws:/home/user/franka-docker/franka_ws \
      fr3-docker
 ```
+or safe way
+Container starts terminal instead 
+```bash
+sudo docker run -it --rm \
+  --network host \
+  --privileged \
+  -v ~/franka-docker/franka_ws:/home/user/franka-docker/franka_ws \
+  --entrypoint bash \
+  fr3-docker
+```
+
 
 Parameter explanation:
 
