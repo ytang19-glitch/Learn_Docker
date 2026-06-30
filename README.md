@@ -375,7 +375,6 @@ sudo docker run -it --rm \
   fr3-docker
 ```
 
-
 Parameter explanation:
 
 | Option           | Description                                                        |
