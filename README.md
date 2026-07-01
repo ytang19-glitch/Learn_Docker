@@ -356,7 +356,7 @@ sudo docker build --no-cache -t fr3-docker .
 
 Launch the container:
 
-Container starts robot automatically
+Container starts robot automatically 
 ```bash
 sudo docker run -it --rm \
      --network host \
@@ -365,7 +365,7 @@ sudo docker run -it --rm \
      fr3-docker
 ```
 or safe way
-Container starts terminal instead 
+Container starts terminal instead (--entrypoint bash )
 ```bash
 sudo docker run -it --rm \
   --network host \
