@@ -17,3 +17,5 @@ pip install requests
 
 # leave environment
 deactivate
+
+python3 -c "import panda_py; print(panda_py.__file__)"
