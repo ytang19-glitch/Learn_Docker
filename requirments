@@ -19,3 +19,6 @@ pip install requests
 deactivate
 
 python3 -c "import panda_py; print(panda_py.__file__)"
+
+nano /usr/local/lib/python3.10/dist-packages/panda_py/__init__.py
+
