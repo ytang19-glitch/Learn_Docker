@@ -403,16 +403,17 @@ make sure franky is available
 ```bash
 ros2 pkg list | grep franky
 ```
-if certifidate of ssl is expired:
+if certificate of ssl is expired:
 ```bash
 cd /usr/local/lib/python3.10/dis-packages?panda_py
 nano __init__/py
 ```
+
+ssl_context like a security rule card we give to the websocket connection.
+
 ```bash
 import ssl
-
 ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-
 # Disable certificate verification
 ssl_context.check_hostname = False
 ssl_context.verify_mode = ssl.CERT_NONE
