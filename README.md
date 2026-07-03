@@ -409,7 +409,6 @@ if certifidate of ssl is expired:
 ```bash
 cd /usr/local/lib/python3.10/dis-packages?panda_py
 nano __init__/py
-
 ```
 
 franka_bridge is a communication layer between ROS 2 and the real Franka robot.
