@@ -414,9 +414,11 @@ ssl_context like a security rule card we give to the websocket connection.
 ```bash
 import ssl
 ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
 # Disable certificate verification
 ssl_context.check_hostname = False
 ssl_context.verify_mode = ssl.CERT_NONE
+ssl=ssl_context
 ```
 
 franka_bridge is a communication layer between ROS 2 and the real Franka robot.
