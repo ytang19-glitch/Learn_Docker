@@ -421,7 +421,7 @@ ssl_context.verify_mode = ssl.CERT_NONE
 
 franka_bridge is a communication layer between ROS 2 and the real Franka robot.
 ```bash
-ros2 launch franky_ros franky_bringup.launch.py robot_ip:=192.168.0.1
+ros2 launch franky_ros franky_bringup.launch.py
 ```
 
 
