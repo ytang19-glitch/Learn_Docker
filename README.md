@@ -409,7 +409,7 @@ cd /usr/local/lib/python3.10/dis-packages?panda_py
 nano __init__/py
 ```
 
-ssl_context like a security rule card we give to the websocket connection.
+"ssl_context" like a security rule card we give to the websocket connection.
 
 ```bash
 import ssl
