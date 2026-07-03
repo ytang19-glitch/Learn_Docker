@@ -376,7 +376,6 @@ sudo docker run -it --rm \
 ```
 ST
 
-
 Parameter explanation:
 
 | Option           | Description                                                        |
@@ -389,8 +388,8 @@ Parameter explanation:
 
 ---
 
-
 # Step 12. start robot driver
+
 Check if the docker(humble) is injetced by the host(jazzy)
 ```bash
 cat ~/.bashrc | grep ros
@@ -410,12 +409,20 @@ if certifidate of ssl is expired:
 cd /usr/local/lib/python3.10/dis-packages?panda_py
 nano __init__/py
 ```
+```bash
+import ssl
+
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+# Disable certificate verification
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
+```
 
 franka_bridge is a communication layer between ROS 2 and the real Franka robot.
 ```bash
 ros2 launch franky_ros franky_bringup.launch.py robot_ip:=192.168.0.1
 ```
-
 
 
 # Verification Purpose
