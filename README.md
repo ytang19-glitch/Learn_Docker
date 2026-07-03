@@ -374,7 +374,6 @@ sudo docker run -it --rm \
   --entrypoint bash \
   fr3-docker
 ```
-ST
 
 Parameter explanation:
 
