@@ -146,6 +146,6 @@ yujieta+ 3675889  0.0  0.0  18164  2364 pts/4    S+   21:21   0:00 grep --color=
 
 
 
-
+find /home/user/franka-docker/franka_ws -path "*franky_ros*__init__.py"
 
 
