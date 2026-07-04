@@ -148,4 +148,16 @@ yujieta+ 3675889  0.0  0.0  18164  2364 pts/4    S+   21:21   0:00 grep --color=
 
 find /home/user/franka-docker/franka_ws -path "*franky_ros*__init__.py"
 
+ File "/home/user/franka-docker/franka_ws/build/franky_ros/franky_ros/franky_bridge.py", line 66, in __init__
+[franky_bridge-1]     self.robot = franky.Robot(robot_ip, realtime_config=rt_conf)
+[franky_bridge-1] franky._franky.NetworkException: libfranka: Connection timeout. Please check your network connection or settings.
+[franky_bridge-1] Traceback (most recent call last):
+[franky_bridge-1]   File "/home/user/franka-docker/franka_ws/install/franky_ros/lib/franky_ros/franky_bridge", line 33, in <module>
+[franky_bridge-1]     sys.exit(load_entry_point('franky-ros', 'console_scripts', 'franky_bridge')())
+[franky_bridge-1]   File "/home/user/franka-docker/franka_ws/build/franky_ros/franky_ros/franky_bridge.py", line 437, in main
+[franky_bridge-1]     node = FrankyRosBridge()
+[franky_bridge-1]   File "/home/user/franka-docker/franka_ws/build/franky_ros/franky_ros/franky_bridge.py", line 66, in __init__
+[franky_bridge-1]     self.robot = franky.Robot(robot_ip, realtime_config=rt_conf)
+[franky_bridge-1] franky._franky.NetworkException: libfranka: Connection timeout. Please check your network connection or settings.
+[ERROR] [franky_bridge-1]: process has died [pid 1112, exit code 1, cmd '/home/user/franka-docker/franka_ws/install/franky_ros/lib/franky_ros/franky_bridge --ros-args -r __node:=franky_
 
