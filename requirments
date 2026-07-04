@@ -107,81 +107,22 @@ yujietang@yujietang-System-Product-Name:~$ ip addr
        valid_lft 2607sec preferred_lft 2607sec
     inet6 fe80::55d4:49bc:93b5:a88b/64 scope link noprefixroute 
        valid_lft forever preferred_lft forever
-3: wlp5s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
-    link/ether 64:6e:69:6a:dd:87 brd ff:ff:ff:ff:ff:ff
-4: wlp2s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
-    link/ether 7c:8b:ca:13:cc:cb brd ff:ff:ff:ff:ff:ff
-5: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
-    link/ether b2:b0:fe:3e:5d:7b brd ff:ff:ff:ff:ff:ff
-    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
-       valid_lft forever preferred_lft forever
-    inet6 fe80::b0b0:feff:fe3e:5d7b/64 scope link 
-       valid_lft forever preferred_lft forever
-yujietang@yujietang-System-Product-Name:~$ ip route
-default via 192.168.0.1 dev enp0s31f6 proto dhcp src 192.168.0.138 metric 20100 
-172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
-
-192.168.0.0/24 dev enp0s31f6 proto kernel scope link src 192.168.0.138 metric 100 
+3: wlp5s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noqueue state DOWN group default qlen 100
 
 
 
 
 
-~$ ping 192.168.0.1 \ curl -k https://192.168.0.1
-ping: invalid option -- 'k'
-
-Usage
-  ping [options] <destination>
-
-Options:
-  <destination>      DNS name or IP address
-  -a                 use audible ping
-  -A                 use adaptive ping
-  -B                 sticky source address
-  -c <count>         stop after <count> replies
-  -C                 call connect() syscall on socket creation
-  -D                 print timestamps
-  -d                 use SO_DEBUG socket option
-  -e <identifier>    define identifier for ping session, default is random for
-                     SOCK_RAW and kernel defined for SOCK_DGRAM
-                     Imply using SOCK_RAW (for IPv4 only for identifier 0)
-  -f                 flood ping
-  -h                 print help and exit
-  -H                 force reverse DNS name resolution (useful for numeric
-                     destinations or for -f), override -n
-  -I <interface>     either interface name or address
-  -i <interval>      seconds between sending each packet
-  -L                 suppress loopback of multicast packets
-  -l <preload>       send <preload> number of packages while waiting replies
-  -m <mark>          tag the packets going out
-  -M <pmtud opt>     define path MTU discovery, can be one of <do|dont|want|probe>
-  -n                 no reverse DNS name resolution, override -H
-  -O                 report outstanding replies
-  -p <pattern>       contents of padding byte
-  -q                 quiet output
-  -Q <tclass>        use quality of service <tclass> bits
-  -s <size>          use <size> as number of data bytes to be sent
-  -S <size>          use <size> as SO_SNDBUF socket option value
-  -t <ttl>           define time to live
-  -U                 print user-to-user latency
-  -v                 verbose output
-  -V                 print version and exit
-  -w <deadline>      reply wait <deadline> in seconds
-  -W <timeout>       time to wait for response
-
-IPv4 options:
-  -4                 use IPv4
-  -b                 allow pinging broadcast
-  -R                 record route
-  -T <timestamp>     define timestamp, can be one of <tsonly|tsandaddr|tsprespec>
-
-IPv6 options:
-  -6                 use IPv6
-  -F <flowlabel>     define flow label, default is random
-  -N <nodeinfo opt>  use IPv6 node info query, try <help> as argument
 
 
 
+
+ujietang@yujietang-System-Product-Name:~$ ps aux | grep ros2
+yujieta+ 3675772  0.0  0.0  18164  2372 pts/4    S+   21:21   0:00 grep --color=auto ros2
+yujietang@yujietang-System-Product-Name:~$ ps aux | grep python
+root        1787  0.0  0.0 127072 24676 ?        Ssl  Jun22   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+yujieta+  185347  0.0  0.3 1003772 221804 ?      SNl  Jun23   4:52 /usr/bin/python3 /usr/bin/update-manager --no-update --no-focus-on-map
+yujieta+ 3675889  0.0  0.0  18164  2364 pts/4    S+   21:21   0:00 grep --color=auto python
 
 
 
