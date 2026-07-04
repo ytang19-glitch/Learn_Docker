@@ -125,7 +125,22 @@ yujieta+  185347  0.0  0.3 1003772 221804 ?      SNl  Jun23   4:52 /usr/bin/pyth
 yujieta+ 3675889  0.0  0.0  18164  2364 pts/4    S+   21:21   0:00 grep --color=auto python
 
 
+  self.get_logger().info(f"Connecting to fr3 and Gripper at {robot_ip}...")
 
+        self.desk = panda_py.Desk(robot_ip, "Tangyujie", "tangyujie2003", platform="fr3")
+        self.desk.take_control(force=True)
+        self.get_logger().info(str(self.desk.has_control()))
+        self.desk.unlock()
+        self.desk.activate_fci()
+
+        self.get_logger().info("Establishing hardware connection...")
+        try:
+            rt_conf = (
+                franky.RealtimeConfig.Enforce
+                if realtime
+                else franky.RealtimeConfig.Ignore
+            )
+            self.robot = franky.Robot(robot_ip, realtime_config=rt_conf)
 
 
 
