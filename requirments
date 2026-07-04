@@ -22,3 +22,66 @@ python3 -c "import panda_py; print(panda_py.__file__)"
 
 nano /usr/local/lib/python3.10/dist-packages/panda_py/__init__.py
 
+
+
+
+
+
+
+class FrankyRosBridge(Node):
+    def __init__(self):
+        super().__init__("franky_ros_bridge")
+
+        self.declare_parameter("robot_ip", "192.168.0.1")
+        self.declare_parameter("realtime", False)
+        self.declare_parameter("max_velocity", 0.05)
+        self.declare_parameter("max_acceleration", 0.1)
+        self.declare_parameter("max_jerk", 0.15)
+        robot_ip = self.get_parameter("robot_ip").get_parameter_value().string_value
+        realtime = self.get_parameter("realtime").get_parameter_value().bool_value
+        max_vel = self.get_parameter("max_velocity").get_parameter_value().double_value
+        max_acc = (
+            self.get_parameter("max_acceleration").get_parameter_value().double_value
+        )
+        max_jerk = self.get_parameter("max_jerk").get_parameter_value().double_value
+
+        self.get_logger().info(f"Connecting to fr3 and Gripper at {robot_ip}...")
+
+        self.desk = panda_py.Desk(robot_ip, "Tangyujie", "tangyujie2003", platform="fr3")
+        self.desk.take_control(force=True)
+        self.get_logger().info(str(self.desk.has_control()))
+        self.desk.unlock()
+        self.desk.activate_fci()
+
+        self.get_logger().info("Establishing hardware connection...")
+        try:
+            rt_conf = (
+                franky.RealtimeConfig.Enforce
+                if realtime
+                else franky.RealtimeConfig.Ignore
+            )
+            self.robot = franky.Robot(robot_ip, realtime_config=rt_conf)
+            # BUG: this part does not work as expected but keeping it for now due to nice ros params
+            # self.robot.relative_dynamics_factor = franky.RelativeDynamicsFactor(
+            #     velocity=max_vel, acceleration=max_acc, jerk=max_jerk
+            # )
+            self.robot.relative_dynamics_factor = 0.05
+            self.gripper = franky.Gripper(robot_ip)
+            self.get_logger().info("Hardware connection established.")
+            self.get_logger().info(f"Gripper max width: {self.gripper.max_width}")
+        except Exception as e:
+            self.get_logger().error(f"Failed to connect to robot: {str(e)}")
+            traceback.print_exc()
+            raise
+
+
+
+
+
+
+
+
+
+
+
+
