@@ -509,15 +509,23 @@ eg:
 ```bash
 ros2 interface show franky_msgs/srv/BlockingJointMove
 ```
+Result:
+```bash
+franky_msgs/JointMove target
+	bool relative #
+	float64[] positions #
+```
+
+
 Then call it using that exact type:
 Example:
 Then send a small relative joint-space point-to-point move:
 ```bash
-ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{relative: true, positions: [0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{target: {relative: true, positions: [0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}"
 ```
 Move back:
 ```bash
-ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{relative: true, positions: [-0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{target: {relative: true, positions: [-0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}"
 ```
 If ant absolute point-to-point joint motion:
 ```bash
