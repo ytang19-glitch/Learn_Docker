@@ -425,7 +425,7 @@ franka_bridge is a communication layer between ROS 2 and the real Franka robot.
 ```bash
 ros2 launch franky_ros franky_bringup.launch.py
 ```
-Note:
+Note: the environment configuration of franka arm 3
 the wire network should align with subnet of configuration
 https://franka.de/hubfs/Hardware%20Manual%20Franka%20Research%203_Arm%20v2.1_R02210_1.3_EN.pdf?hsLang=en (p33)
 
@@ -474,27 +474,6 @@ Check state:
 ```bash
 ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
