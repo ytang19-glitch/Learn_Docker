@@ -493,28 +493,45 @@ Comparision between "ros2 topic pub" and " ros2 service call"
 ros2 topic pub = send a message and do not wait for result
 ros2 service call = send a request and wait for response
 ```
+List all available service:
+```bash
+ros2 service list
+```
 First check service format:
 ```bash
 ros2 service type /fr3/move_joints_sync
-ros2 interface show franky_msgs/srv/MoveJoints
 ```
+Then show it:
+```bash
+ros2 interface show franky_msgs/srv/<service format>
+```
+eg:
+```bash
+ros2 interface show franky_msgs/srv/BlockingJointMove
+```
+Then call it using that exact type:
+Example:
 Then send a small relative joint-space point-to-point move:
 ```bash
-ros2 service call /fr3/move_joints_sync franky_msgs/srv/MoveJoints "{relative: true, positions: [0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{relative: true, positions: [0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
 ```
 Move back:
 ```bash
-ros2 service call /fr3/move_joints_sync franky_msgs/srv/MoveJoints "{relative: true, positions: [-0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{relative: true, positions: [-0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
 ```
-If you want absolute point-to-point joint motion:
+If ant absolute point-to-point joint motion:
 ```bash
 ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
 ```
 Copy the current 7 joint positions, change them slightly, then call:
 ```bash
-ros2 service call /fr3/move_joints_sync franky_msgs/srv/MoveJoints "{relative: false, positions: [-0.08, -0.49, 0.28, -2.07, 0.0, 1.55, -2.27]}"
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{relative: true, positions: [-0.08, -0.49, 0.28, -2.07, 0.0, 1.55, -2.27]}"
 ```
-relative: false means the vector is the final joint configuration q. relative: true means the vector is an offset Δq.
+relative: 
+false means the vector is the final joint configuration 
+q. relative: true means the vector is an offset Δq.
+
+
 
 # Verification Purpose
 
