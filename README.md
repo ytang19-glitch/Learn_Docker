@@ -463,7 +463,7 @@ ros2 topic can receive the current statue of each joint like position and corres
 ```bash
 ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
 ```
-(4) check the process of bridgeL:
+(4) check the process of bridge:
 ```bash
 ps -ef | grep -E "franky_bridge|franky_bringup|ros2 launch"
 ```
@@ -488,7 +488,33 @@ ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
 
 # Step 14. Test robot from one point to the other:
 
-
+Comparision between "ros2 topic pub" and " ros2 service call"
+```bash
+ros2 topic pub = send a message and do not wait for result
+ros2 service call = send a request and wait for response
+```
+First check service format:
+```bash
+ros2 service type /fr3/move_joints_sync
+ros2 interface show franky_msgs/srv/MoveJoints
+```
+Then send a small relative joint-space point-to-point move:
+```bash
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/MoveJoints "{relative: true, positions: [0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
+```
+Move back:
+```bash
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/MoveJoints "{relative: true, positions: [-0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
+```
+If you want absolute point-to-point joint motion:
+```bash
+ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
+```
+Copy the current 7 joint positions, change them slightly, then call:
+```bash
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/MoveJoints "{relative: false, positions: [-0.08, -0.49, 0.28, -2.07, 0.0, 1.55, -2.27]}"
+```
+relative: false means the vector is the final joint configuration q. relative: true means the vector is an offset Δq.
 
 # Verification Purpose
 
