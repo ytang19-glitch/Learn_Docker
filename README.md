@@ -437,15 +437,15 @@ For robot , both the phsical links and ip subnet must match before communication
 
 # Step 13. Command to control robot based on docker 
 open the other terminal: 
-Find container name:
+(1) Find container name:
 ```bash
 docker ps
 ```
-Enter the container that have franky_bridge
+(2) Enter the container that have franky_bridge
 ```bash
  docker exec -it 500fc96bd94d bash
 ```
-Check current running node 
+(3) Check current running node 
 ```bash
 ros2 node list \ 
 ros2 topic list\
@@ -457,14 +457,23 @@ ros2 topic can receive the current statue of each joint like position and corres
 ```bash
 ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
 ```
+(4) check the process of bridgeL:
+```bash
+ps -ef | grep -E "franky_bridge|franky_bringup|ros2 launch"
+```
+(5) Control command to make robot move
 
-
-
-
-
-
-
-
+```bash
+ros2 topic pub --once /fr3/joint_pos_cmd franky_msgs/msg/JointMove "{relative: true, positions: [0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
+```
+Move back:
+```bash
+ros2 topic pub --once /fr3/joint_pos_cmd franky_msgs/msg/JointMove "{relative: true, positions: [-0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
+```
+Check state:
+```bash
+ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
+```
 
 
 
