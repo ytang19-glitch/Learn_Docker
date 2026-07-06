@@ -429,6 +429,12 @@ Note: the environment configuration of franka arm 3
 the wire network should align with subnet of configuration
 https://franka.de/hubfs/Hardware%20Manual%20Franka%20Research%203_Arm%20v2.1_R02210_1.3_EN.pdf?hsLang=en (p33)
 
+Troubleshooting: 
+LIbfranka: timeout
+```bash
+https://frankarobotics.github.io/docs/troubleshooting.html
+```
+
 ```bash
 changeing the wire changes the phsical connection, changing ip configuration changes
 the logical network
@@ -479,6 +485,9 @@ Check state:
 ```bash
 ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
 ```
+
+# Step 14. Test robot from one point to the other:
+
 
 
 # Verification Purpose
