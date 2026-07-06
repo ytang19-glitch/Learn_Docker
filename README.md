@@ -436,7 +436,32 @@ For robot , both the phsical links and ip subnet must match before communication
 ```
 
 # Step 13. Command to control robot based on docker 
-open the other terminal 
+open the other terminal: 
+```bash
+ros2 node list \ 
+ros2 topic list\
+ros2 topic info /fr3/joint_states\
+ros2 topic echo /fr3/joint_states
+```
+echo is a functional test, not an inspection command.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
