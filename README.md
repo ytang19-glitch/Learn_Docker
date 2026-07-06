@@ -467,7 +467,7 @@ joint position vector or joint configuration.
 ```bash
 q=[q1​,q2​,q3​,q4​,q5​,q6​,q7​]^T
 ```
-Move j1 0.02 rad:
+Makes J1 move by +0.02 rad:
 ```bash
 ros2 topic pub --once /fr3/joint_pos_cmd franky_msgs/msg/JointMove "{relative: true, positions: [0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
 ```
