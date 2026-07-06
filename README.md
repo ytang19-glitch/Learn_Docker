@@ -473,6 +473,11 @@ joint position vector or joint configuration.
 ```bash
 q=[q1​,q2​,q3​,q4​,q5​,q6​,q7​]^T
 ```
+Based on the result of " ros2 node list"
+```bash
+/fr3/joint_pos_cmd
+type: franky_msgs/msg/JointMove
+```
 Makes J1 move by +0.02 rad:
 ```bash
 ros2 topic pub --once /fr3/joint_pos_cmd franky_msgs/msg/JointMove "{relative: true, positions: [0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
@@ -516,8 +521,8 @@ franky_msgs/JointMove target
 	float64[] positions #
 ```
 
-
 Then call it using that exact type:
+target exists only because the service definition wraps the JointMove message inside a request field named target.
 Example:
 Then send a small relative joint-space point-to-point move:
 ```bash
