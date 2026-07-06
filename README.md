@@ -463,6 +463,11 @@ ps -ef | grep -E "franky_bridge|franky_bringup|ros2 launch"
 ```
 (5) Control command to make robot move
 
+joint position vector or joint configuration.
+```bash
+q=[q1​,q2​,q3​,q4​,q5​,q6​,q7​]^T
+```
+Move j1 0.02 rad:
 ```bash
 ros2 topic pub --once /fr3/joint_pos_cmd franky_msgs/msg/JointMove "{relative: true, positions: [0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
 ```
@@ -474,8 +479,6 @@ Check state:
 ```bash
 ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
 ```
-
-
 
 
 # Verification Purpose
