@@ -435,6 +435,12 @@ the logical network
 For robot , both the phsical links and ip subnet must match before communication works 
 ```
 
+# Step 13. Command to control robot based on docker 
+open the other terminal 
+
+
+
+
 # Verification Purpose
 
 The Docker environment is used solely to verify the complete FR3 communication pipeline:
