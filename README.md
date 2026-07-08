@@ -574,14 +574,33 @@ true means the vector is an offset Δq.
 If relative is true
 Final configuration will be " q + Δq" 
 
+Example:
+Point 1:
+[0.05, -0.49, 0.28, -2.07, 0.0, 1.55, -2.27]}
 
+Point 2:
+[0.60, -0.4820, 0.2925, -2.0601, 0.0086, 1.5609, -2.2664]
 
-
-
-
-
-
-
+The actual position of each joint:
+```bash
+          Tool / Gripper
+               ↑
+              J7  ← Wrist rotation
+               │
+              J6  ← Wrist bend
+               │
+              J5  ← Forearm twist
+               │
+              J4  ← Elbow
+               │
+              J3  ← Upper arm rotation
+               │
+              J2  ← Shoulder
+               │
+              J1  ← Base rotation
+               │
+            Robot Base
+```
 # Verification Purpose
 
 The Docker environment is used solely to verify the complete FR3 communication pipeline:
