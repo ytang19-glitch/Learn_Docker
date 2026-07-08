@@ -423,7 +423,7 @@ ssl=ssl_context,
 
 franka_bridge is a communication layer between ROS 2 and the real Franka robot.
 ```bash
-ros2 launch franky_ros franky_bringup.launch.py
+ros2 launch franky_ros franky_bringup.launch.py robot_ip:=172.16.0.2
 ```
 Note: the environment configuration of franka arm 3
 the wire network should align with subnet of configuration
