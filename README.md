@@ -603,7 +603,6 @@ The actual position of each joint:
 
 
 # Step 16.  Cartesian motion：
-
 To pick object on the table, cartesian motion is utilized for moving robot downward
 x=[x,y,z,R]T
 which is consisted of "position" and "orientation"
@@ -614,7 +613,11 @@ ros2 service type /fr3/move_cartesian_sync
 ros2 service type /fr3/move_cartesian_sync
 ros2 interface show franky_msgs/srv/BlockingCartesianMove
 ```
-Usually downward means negative z, (downward 1 cm) so:
+Step 1: turn left slightly by J1 +0.5 rad
+```bash
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{target: {relative: true, positions: [0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}"
+```
+Step 2: Usually downward means negative z, (downward 1 cm) so:
 ```bash
 ros2 service call /fr3/move_cartesian_sync franky_msgs/srv/BlockingCartesianMove "{target: {relative: true, pose: {position: {x: 0.0, y: 0.0, z: -0.01}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
 ```
