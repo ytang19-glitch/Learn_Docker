@@ -619,9 +619,9 @@ Step 1: turn left slightly by J1 +0.5 rad
 ```bash
 ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{target: {relative: true, positions: [0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}"
 ```
-Step 2: Usually downward means negative z, (downward 1 cm) so:
+Step 2: Usually downward means negative z, (downward 20 cm) so:
 ```bash
-ros2 service call /fr3/move_cartesian_sync franky_msgs/srv/BlockingCartesianMove "{target: {relative: true, pose: {position: {x: 0.0, y: 0.0, z: -0.01}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
+ros2 service call /fr3/move_cartesian_sync franky_msgs/srv/BlockingCartesianMove "{target: {relative: true, pose: {position: {x: 0.0, y: 0.0, z: 0.2}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
 ```
 
 # Verification Purpose
