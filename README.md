@@ -558,7 +558,7 @@ position:
 ```
  current 7 joint positions, change them slightly, then call:
 ```bash
-ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{relative: false positions: [-0.08, -0.49, 0.28, -2.07, 0.0, 1.55, -2.27]}"
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{target: {relative: false, positions: [-0.08, -0.49, 0.28, -2.07, 0.0, 1.55, -2.27]}}"
 ```
 In:
 ```bash
@@ -574,8 +574,6 @@ Final configuration will be " q + Δq"
 
 
 Demo:
-
-
 
 
 
