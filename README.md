@@ -601,7 +601,7 @@ The actual position of each joint:
               J1  ← Base rotation
                │
             Robot Base
-
+```
 
 # Step 16.  Cartesian motion：
 To pick object on the table, cartesian motion is utilized for moving robot downward
