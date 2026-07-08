@@ -533,16 +533,52 @@ Move back:
 ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{target: {relative: true, positions: [-0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}"
 ```
 If ant absolute point-to-point joint motion:
+Check robot’s current joint configuration:
 ```bash
 ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
 ```
-Copy the current 7 joint positions, change them slightly, then call:
+eg:
 ```bash
-ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{relative: true, positions: [-0.08, -0.49, 0.28, -2.07, 0.0, 1.55, -2.27]}"
+name:
+- fr3_joint1
+- fr3_joint2
+- fr3_joint3
+- fr3_joint4
+- fr3_joint5
+- fr3_joint6
+- fr3_joint7
+position:
+- 0.05401705950498581
+- -0.4920155704021454
+- 0.2825087606906891
+- -2.0701420307159424
+- -0.00135016068816185
+- 1.5508956909179688
+- -2.276381015777588
 ```
-relative: 
+ current 7 joint positions, change them slightly, then call:
+```bash
+ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{relative: false positions: [-0.08, -0.49, 0.28, -2.07, 0.0, 1.55, -2.27]}"
+```
+In:
+```bash
+{relative: false positions: [-0.08, -0.49, 0.28, -2.07, 0.0, 1.55, -2.27]}"
+```
+Relative: 
+```bash
 false means the vector is the final joint configuration 
-q. relative: true means the vector is an offset Δq.
+true means the vector is an offset Δq.
+```
+If relative is true
+Final configuration will be " q + Δq" 
+
+
+Demo:
+
+
+
+
+
 
 
 
