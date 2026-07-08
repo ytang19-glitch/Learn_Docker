@@ -600,7 +600,25 @@ The actual position of each joint:
               J1  ← Base rotation
                │
             Robot Base
+
+
+# Step 16.  Cartesian motion：
+
+To pick object on the table, cartesian motion is utilized for moving robot downward
+x=[x,y,z,R]T
+which is consisted of "position" and "orientation"
+
+The FR3 controller then solves the inverse kinematics and trajectory planning internally to convert that Cartesian objective into coordinated motion of all seven joints.
+ros2 service type /fr3/move_cartesian_sync
+```bash
+ros2 service type /fr3/move_cartesian_sync
+ros2 interface show franky_msgs/srv/BlockingCartesianMove
 ```
+Usually downward means negative z, (downward 1 cm) so:
+```bash
+ros2 service call /fr3/move_cartesian_sync franky_msgs/srv/BlockingCartesianMove "{target: {relative: true, pose: {position: {x: 0.0, y: 0.0, z: -0.01}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
+```
+
 # Verification Purpose
 
 The Docker environment is used solely to verify the complete FR3 communication pipeline:
