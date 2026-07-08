@@ -532,6 +532,8 @@ Move back:
 ```bash
 ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{target: {relative: true, positions: [-0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}"
 ```
+
+# Step 15. Point to point demo 
 If ant absolute point-to-point joint motion:
 Check robot’s current joint configuration:
 ```bash
@@ -573,7 +575,7 @@ If relative is true
 Final configuration will be " q + Δq" 
 
 
-Demo:
+
 
 
 
