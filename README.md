@@ -607,6 +607,7 @@ The actual position of each joint:
 To pick object on the table, cartesian motion is utilized for moving robot downward
 x=[x,y,z,R]T
 which is consisted of "position" and "orientation"
+"orientation" here represent quaternion
 
 The FR3 controller then solves the inverse kinematics and trajectory planning internally to convert that Cartesian objective into coordinated motion of all seven joints.
 ros2 service type /fr3/move_cartesian_sync
