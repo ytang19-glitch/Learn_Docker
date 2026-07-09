@@ -615,6 +615,7 @@ ros2 service type /fr3/move_cartesian_sync
 ros2 service type /fr3/move_cartesian_sync
 ros2 interface show franky_msgs/srv/BlockingCartesianMove
 ```
+
 Step 1: turn left slightly by J1 +0.5 rad
 ```bash
 ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{target: {relative: true, positions: [0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}"
