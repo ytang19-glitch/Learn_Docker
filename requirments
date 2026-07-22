@@ -1,33 +1,79 @@
-#Python pip
+# Python Environment Setup
+
+## Install pip
+
+```bash
 sudo apt install python3-pip
-python3 -m pip --version ( check version)
 
+# Verify installation
+python3 -m pip --version
+```
 
-# venv support
+---
+
+## Install Virtual Environment Support
+
+```bash
 sudo apt install python3-venv
+```
 
-# Create a virtual environment
+---
+
+## Create a Virtual Environment
+
+```bash
 python3 -m venv myenv
+```
 
-# activate
+Activate the environment:
+
+```bash
 source myenv/bin/activate
+```
 
-# install packages
+Install Python packages:
+
+```bash
 pip install requests
+```
 
-# leave environment
+Exit the virtual environment:
+
+```bash
 deactivate
+```
 
+---
+
+# Verify Python Package Location
+
+To check where a Python package is installed:
+
+```bash
 python3 -c "import panda_py; print(panda_py.__file__)"
+```
 
+Example output:
+
+```text
+/usr/local/lib/python3.10/dist-packages/panda_py/__init__.py
+```
+
+Open the file if modifications are required:
+
+```bash
 nano /usr/local/lib/python3.10/dist-packages/panda_py/__init__.py
+```
 
+---
 
+# Franky ROS Bridge
 
+The bridge connects the Franka FR3 hardware to ROS 2.
 
+## Initialization Parameters
 
-
-
+```python
 class FrankyRosBridge(Node):
     def __init__(self):
         super().__init__("franky_ros_bridge")
@@ -37,127 +83,179 @@ class FrankyRosBridge(Node):
         self.declare_parameter("max_velocity", 0.05)
         self.declare_parameter("max_acceleration", 0.1)
         self.declare_parameter("max_jerk", 0.15)
-        robot_ip = self.get_parameter("robot_ip").get_parameter_value().string_value
-        realtime = self.get_parameter("realtime").get_parameter_value().bool_value
-        max_vel = self.get_parameter("max_velocity").get_parameter_value().double_value
-        max_acc = (
-            self.get_parameter("max_acceleration").get_parameter_value().double_value
-        )
-        max_jerk = self.get_parameter("max_jerk").get_parameter_value().double_value
 
-        self.get_logger().info(f"Connecting to fr3 and Gripper at {robot_ip}...")
+        robot_ip = self.get_parameter(
+            "robot_ip"
+        ).get_parameter_value().string_value
 
-        self.desk = panda_py.Desk(robot_ip, "Tangyujie", "tangyujie2003", platform="fr3")
-        self.desk.take_control(force=True)
-        self.get_logger().info(str(self.desk.has_control()))
-        self.desk.unlock()
-        self.desk.activate_fci()
+        realtime = self.get_parameter(
+            "realtime"
+        ).get_parameter_value().bool_value
 
-        self.get_logger().info("Establishing hardware connection...")
-        try:
-            rt_conf = (
-                franky.RealtimeConfig.Enforce
-                if realtime
-                else franky.RealtimeConfig.Ignore
-            )
-            self.robot = franky.Robot(robot_ip, realtime_config=rt_conf)
-            # BUG: this part does not work as expected but keeping it for now due to nice ros params
-            # self.robot.relative_dynamics_factor = franky.RelativeDynamicsFactor(
-            #     velocity=max_vel, acceleration=max_acc, jerk=max_jerk
-            # )
-            self.robot.relative_dynamics_factor = 0.05
-            self.gripper = franky.Gripper(robot_ip)
-            self.get_logger().info("Hardware connection established.")
-            self.get_logger().info(f"Gripper max width: {self.gripper.max_width}")
-        except Exception as e:
-            self.get_logger().error(f"Failed to connect to robot: {str(e)}")
-            traceback.print_exc()
-            raise
+        max_vel = self.get_parameter(
+            "max_velocity"
+        ).get_parameter_value().double_value
 
+        max_acc = self.get_parameter(
+            "max_acceleration"
+        ).get_parameter_value().double_value
 
+        max_jerk = self.get_parameter(
+            "max_jerk"
+        ).get_parameter_value().double_value
+```
 
-[INFO] [1783131313.302990858] [franky_ros_bridge]: Establishing hardware connection...
-[franky_bridge-1] [ERROR] [1783131314.304720252] [franky_ros_bridge]: Failed to connect to robot: libfranka: Connection timeout. Please check your network connection or settings.
-[franky_bridge-1] Traceback (most recent call last):
-[franky_bridge-1]   File "/home/user/franka-docker/franka_ws/build/franky_ros/franky_ros/franky_bridge.py", line 63, in __init__
-[franky_bridge-1]     self.robot = franky.Robot(robot_ip, realtime_config=rt_conf)
-[franky_bridge-1] franky._franky.NetworkException: libfranka: Connection timeout. Please check your network connection or settings.
-[franky_bridge-1] Traceback (most recent call last):
-[franky_bridge-1]   File "/home/user/franka-docker/franka_ws/install/franky_ros/lib/franky_ros/franky_bridge", line 33, in <module>
-[franky_bridge-1]     sys.exit(load_entry_point('franky-ros', 'console_scripts', 'franky_bridge')())
-[franky_bridge-1]   File "/home/user/franka-docker/franka_ws/build/franky_ros/franky_ros/franky_bridge.py", line 434, in main
-[franky_bridge-1] 192.168.0.1
-[franky_bridge-1]     node = FrankyRosBridge()
-[franky_bridge-1]   File "/home/user/franka-docker/franka_ws/build/franky_ros/franky_ros/franky_bridge.py", line 63, in __init__
-[franky_bridge-1]     self.robot = franky.Robot(robot_ip, realtime_config=rt_conf)
-[franky_bridge-1] franky._franky.NetworkException: libfranka: Connection timeout. Please check your network connection or settings.
-[ERROR] [franky_bridge-1]: process has died [pid 437, exit code 1, cmd '/home/user/franka-docker/franka_ws/install/franky_ros/lib/franky_ros/franky_bridge --ros-args -r __node:=franky_ros_bridge --params-file /tmp/launch_params_j82c4l9_'].
+---
 
+## Desk Connection
 
-yujietang@yujietang-System-Product-Name:~$ ip addr
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host noprefixroute 
-       valid_lft forever preferred_lft forever
-2: enp0s31f6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    link/ether 2c:fd:a1:6f:1b:9a brd ff:ff:ff:ff:ff:ff
-    inet 192.168.0.138/24 brd 192.168.0.255 scope global dynamic noprefixroute enp0s31f6
-       valid_lft 2607sec preferred_lft 2607sec
-    inet6 fe80::55d4:49bc:93b5:a88b/64 scope link noprefixroute 
-       valid_lft forever preferred_lft forever
-3: wlp5s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noqueue state DOWN group default qlen 100
+```python
+self.get_logger().info(
+    f"Connecting to FR3 and Gripper at {robot_ip}..."
+)
 
+self.desk = panda_py.Desk(
+    robot_ip,
+    "Tangyujie",
+    "tangyujie2003",
+    platform="fr3",
+)
 
+self.desk.take_control(force=True)
 
+self.get_logger().info(
+    str(self.desk.has_control())
+)
 
+self.desk.unlock()
+self.desk.activate_fci()
+```
 
+---
 
+## Hardware Connection
 
+```python
+self.get_logger().info(
+    "Establishing hardware connection..."
+)
 
+try:
 
-ujietang@yujietang-System-Product-Name:~$ ps aux | grep ros2
-yujieta+ 3675772  0.0  0.0  18164  2372 pts/4    S+   21:21   0:00 grep --color=auto ros2
-yujietang@yujietang-System-Product-Name:~$ ps aux | grep python
-root        1787  0.0  0.0 127072 24676 ?        Ssl  Jun22   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
-yujieta+  185347  0.0  0.3 1003772 221804 ?      SNl  Jun23   4:52 /usr/bin/python3 /usr/bin/update-manager --no-update --no-focus-on-map
-yujieta+ 3675889  0.0  0.0  18164  2364 pts/4    S+   21:21   0:00 grep --color=auto python
+    rt_conf = (
+        franky.RealtimeConfig.Enforce
+        if realtime
+        else franky.RealtimeConfig.Ignore
+    )
 
+    self.robot = franky.Robot(
+        robot_ip,
+        realtime_config=rt_conf,
+    )
 
-  self.get_logger().info(f"Connecting to fr3 and Gripper at {robot_ip}...")
+    # Currently fixed.
+    # RelativeDynamicsFactor API is not behaving as expected.
+    self.robot.relative_dynamics_factor = 0.05
 
-        self.desk = panda_py.Desk(robot_ip, "Tangyujie", "tangyujie2003", platform="fr3")
-        self.desk.take_control(force=True)
-        self.get_logger().info(str(self.desk.has_control()))
-        self.desk.unlock()
-        self.desk.activate_fci()
+    self.gripper = franky.Gripper(robot_ip)
 
-        self.get_logger().info("Establishing hardware connection...")
-        try:
-            rt_conf = (
-                franky.RealtimeConfig.Enforce
-                if realtime
-                else franky.RealtimeConfig.Ignore
-            )
-            self.robot = franky.Robot(robot_ip, realtime_config=rt_conf)
+    self.get_logger().info(
+        "Hardware connection established."
+    )
 
+    self.get_logger().info(
+        f"Gripper max width: {self.gripper.max_width}"
+    )
 
+except Exception as e:
 
+    self.get_logger().error(
+        f"Failed to connect to robot: {e}"
+    )
 
+    traceback.print_exc()
+    raise
+```
 
-find /home/user/franka-docker/franka_ws -path "*franky_ros*__init__.py"
+---
 
- File "/home/user/franka-docker/franka_ws/build/franky_ros/franky_ros/franky_bridge.py", line 66, in __init__
-[franky_bridge-1]     self.robot = franky.Robot(robot_ip, realtime_config=rt_conf)
-[franky_bridge-1] franky._franky.NetworkException: libfranka: Connection timeout. Please check your network connection or settings.
-[franky_bridge-1] Traceback (most recent call last):
-[franky_bridge-1]   File "/home/user/franka-docker/franka_ws/install/franky_ros/lib/franky_ros/franky_bridge", line 33, in <module>
-[franky_bridge-1]     sys.exit(load_entry_point('franky-ros', 'console_scripts', 'franky_bridge')())
-[franky_bridge-1]   File "/home/user/franka-docker/franka_ws/build/franky_ros/franky_ros/franky_bridge.py", line 437, in main
-[franky_bridge-1]     node = FrankyRosBridge()
-[franky_bridge-1]   File "/home/user/franka-docker/franka_ws/build/franky_ros/franky_ros/franky_bridge.py", line 66, in __init__
-[franky_bridge-1]     self.robot = franky.Robot(robot_ip, realtime_config=rt_conf)
-[franky_bridge-1] franky._franky.NetworkException: libfranka: Connection timeout. Please check your network connection or settings.
-[ERROR] [franky_bridge-1]: process has died [pid 1112, exit code 1, cmd '/home/user/franka-docker/franka_ws/install/franky_ros/lib/franky_ros/franky_bridge --ros-args -r __node:=franky_
+# Common Connection Error
 
+## Error Message
+
+```text
+[INFO] Establishing hardware connection...
+
+[ERROR] Failed to connect to robot:
+
+libfranka: Connection timeout.
+Please check your network connection or settings.
+```
+
+Full traceback:
+
+```text
+franky._franky.NetworkException:
+libfranka: Connection timeout.
+Please check your network connection or settings.
+```
+
+---
+
+# Cause
+
+The robot cannot establish a **libfranka** connection.
+
+Typical causes include:
+
+- Incorrect robot IP address
+- Ethernet cable connected to the wrong port
+- FCI not activated
+- PC network adapter not configured correctly
+- Robot and workstation are not on the same subnet
+- Firewall blocking communication
+- Robot is not in the correct operating state
+
+---
+
+# Example Configuration
+
+```text
+Robot IP
+192.168.0.1
+```
+
+---
+
+# Debugging Checklist
+
+Before running the Franky ROS Bridge, verify:
+
+- [ ] Ethernet cable is connected to the FR3 Control interface.
+- [ ] Workstation IP is configured correctly.
+- [ ] Robot IP matches the bridge parameter.
+- [ ] FCI has been activated from Franka Desk.
+- [ ] The robot is unlocked.
+- [ ] The workstation can ping the robot.
+- [ ] No other application is controlling the robot.
+- [ ] libfranka version is compatible with the installed Franky package.
+
+---
+
+# Expected Successful Output
+
+```text
+Connecting to FR3 and Gripper...
+
+Taking control...
+
+Unlocking robot...
+
+Activating FCI...
+
+Establishing hardware connection...
+
+Hardware connection established.
+
+Gripper max width: ...
+```
