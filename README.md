@@ -22,7 +22,7 @@ This document provides a complete, step-by-step guide for setting up and verifyi
 The guide is designed for both project documentation and self-learning. Rather than only listing commands, it explains the purpose of each step, the software components involved, common issues that may occur, and methods for verification.
 
 After completing this tutorial, students should be able to:
-
+```text
 - Understand the Franka ROS 2 software architecture.
 - Build and launch the Docker development environment.
 - Establish communication with the Franka FR3 controller.
@@ -30,7 +30,7 @@ After completing this tutorial, students should be able to:
 - Execute basic robot motion examples.
 - Troubleshoot common configuration and networking issues.
 - Build a solid foundation for developing their own ROS 2 and MoveIt applications.
-
+```
 # Goal
 
 Verify the complete communication pipeline from Docker to the physical Franka FR3 robot while keeping the native Ubuntu workspace independent.
