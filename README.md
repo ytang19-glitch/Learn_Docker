@@ -737,6 +737,17 @@ Using Docker as an independent verification environment provides a reliable meth
 
 # References
 
-- Franka Documentation
-- ROS 2 Documentation
-- Docker Documentation
+- Franka Documentation:
+```bash
+https://franka.de/develop
+```
+
+- ROS 2 Documentation:
+```bash
+https://docs.ros.org/en/humble/index.html
+```
+
+- Docker Documentation:
+```bash
+https://github.com/ualberta-robotics/franka-docker/tree/main
+```
