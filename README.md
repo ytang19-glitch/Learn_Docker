@@ -15,9 +15,21 @@
 
 ---
 
-# Overview
+## Overview
 
-This document records the complete setup and verification workflow for running the Franka FR3 using the provided Docker environment.
+This document provides a complete, step-by-step guide for setting up and verifying the Franka FR3 using the provided Docker environment.
+
+The guide is designed for both project documentation and self-learning. Rather than only listing commands, it explains the purpose of each step, the software components involved, common issues that may occur, and methods for verification.
+
+After completing this tutorial, students should be able to:
+
+- Understand the Franka ROS 2 software architecture.
+- Build and launch the Docker development environment.
+- Establish communication with the Franka FR3 controller.
+- Verify hardware and software connectivity.
+- Execute basic robot motion examples.
+- Troubleshoot common configuration and networking issues.
+- Build a solid foundation for developing their own ROS 2 and MoveIt applications.
 
 # Goal
 
