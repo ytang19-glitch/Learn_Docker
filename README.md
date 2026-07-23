@@ -1,3 +1,32 @@
+# FR3 Docker & ROS 2 Verification Guide
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Goal](#goal)
+- [Part I — Docker Installation](#part-i--docker-installation)
+- [Part II — Build the Docker Environment](#part-ii--build-the-docker-environment)
+- [Part III — Launch the FR3 Driver](#part-iii--launch-the-fr3-driver)
+- [Part IV — Robot Communication Verification](#part-iv--robot-communication-verification)
+- [Part V — Robot Motion Examples](#part-v--robot-motion-examples)
+- [Part VI — Troubleshooting](#part-vi--troubleshooting)
+- [Part VII — Verification Results](#part-vii--verification-results)
+- [References](#references)
+
+---
+
+# Overview
+
+This document records the complete setup and verification workflow for running the Franka FR3 using the provided Docker environment.
+
+# Goal
+
+Verify the complete communication pipeline from Docker to the physical Franka FR3 robot while keeping the native Ubuntu workspace independent.
+
+---
+
+# Part I — Docker Installation
+
 # Learn_Docker
 
 ```text
@@ -188,6 +217,8 @@ Buildx provides advanced image-building functionality and is recommended for mod
 
 ---
 
+# Part II — Build the Docker Environment
+
 # Step 9. Build the FR3 Docker Image
 
 Clone the repository:
@@ -213,6 +244,8 @@ docker build -t fr3-docker .
 ```bash
 sudo docker images
 ```
+
+# Part VI — Troubleshooting
 
 # Mscs: Docker Build Troubleshooting
 
@@ -352,6 +385,8 @@ cd ~/franka-docker
 sudo docker build --no-cache -t fr3-docker .
 ```
 
+# Part III — Launch the FR3 Driver
+
 # Steps 11 Run the Docker Container
 
 Launch the container:
@@ -441,6 +476,8 @@ the logical network
 For robot , both the phsical links and ip subnet must match before communication works 
 ```
 
+# Part IV — Robot Communication Verification
+
 # Step 13. Command to control robot based on docker 
 open the other terminal: 
 (1) Find container name:
@@ -490,6 +527,8 @@ Check state:
 ```bash
 ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
 ```
+
+# Part V — Robot Motion Examples
 
 # Step 14. Test robot from one point to the other:
 
@@ -625,6 +664,8 @@ Step 2: Usually downward means negative z, (downward 20 cm) so:
 ros2 service call /fr3/move_cartesian_sync franky_msgs/srv/BlockingCartesianMove "{target: {relative: true, pose: {position: {x: 0.0, y: 0.0, z: 0.2}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
 ```
 
+# Part VII — Verification Results
+
 # Verification Purpose
 
 The Docker environment is used solely to verify the complete FR3 communication pipeline:
@@ -679,3 +720,10 @@ If both environments exhibit the same issue, the focus should shift to:
 
 Using Docker as an independent verification environment provides a reliable method to distinguish software compatibility issues from hardware or network-related problems.
 
+
+
+# References
+
+- Franka Documentation
+- ROS 2 Documentation
+- Docker Documentation
