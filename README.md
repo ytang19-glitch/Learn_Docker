@@ -45,8 +45,9 @@ Verify the complete communication pipeline from Docker to the physical Franka FR
 https://github.com/ualberta-robotics/franka-docker/tree/main
 ```
 Save the current user id into a file:
-
+```bash
 echo -e "USER_UID=$(id -u $USER)\nUSER_GID=$(id -g $USER)" > .env
+```
 It is needed to mount the folder from inside the Docker container.
 # Docker Installation and FR3 Verification Environment
 
