@@ -734,7 +734,7 @@ If both environments exhibit the same issue, the focus should shift to:
 Using Docker as an independent verification environment provides a reliable method to distinguish software compatibility issues from hardware or network-related problems.
 
 
-
+```
 # References
 
 - Franka Documentation:
