@@ -689,6 +689,7 @@ ros2 service call /fr3/move_cartesian_sync franky_msgs/srv/BlockingCartesianMove
 
 The Docker environment is used solely to verify the complete FR3 communication pipeline:
 
+
 ```text
 PC Network
       │
@@ -711,7 +712,7 @@ ROS 2 Controllers
 FR3 Robot
 ```
 
-This helps isolate whether the issue originates from:
+This flowchart stem from franka research 3 documentation, which helps isolate whether the issue originates from:
 
 * ROS 2 Jazzy
 * ros2_control
@@ -746,8 +747,9 @@ Using Docker as an independent verification environment provides a reliable meth
 
 - Franka Documentation:
 ```bash
-https://franka.de/develop
+[https://franka.de/develop](https://franka.de/hubfs/Operating%20Manual%20Franka%20Research%203_5.9.0_5.9.1_R02216_1.2.3_EN.pdf?hsLang=en)](https://franka.de/hubfs/Operating%20Manual%20Franka%20Research%203_5.10_R02216_1.3_EN.pdf?hsLang=en)
 ```
+
 
 - ROS 2 Documentation:
 ```bash
