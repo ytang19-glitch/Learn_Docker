@@ -236,7 +236,7 @@ Buildx provides advanced image-building functionality and is recommended for mod
 ---
 
 # Part II — Build the Docker Environment
-
+---
 # Step 9. Build the FR3 Docker Image
 
 Clone the repository:
@@ -256,7 +256,7 @@ Build the Docker image:
 ```bash
 docker build -t fr3-docker .
 ```
-
+---
 # Step 10. Vertify the successful installation of docker image
 
 ```bash
@@ -352,7 +352,7 @@ changeing the wire changes the phsical connection, changing ip configuration cha
 the logical network
 For robot , both the phsical links and ip subnet must match before communication works 
 ```
-
+---
 # Part VI — Troubleshooting
 
 # Mscs: Docker Build Troubleshooting
@@ -425,6 +425,7 @@ Container remains isolated
         ▼
 ```
 ROS2 Works Correctly
+
 ### Solution
 
 1. Check the Ubuntu version in the `Dockerfile`:
@@ -493,8 +494,7 @@ cd ~/franka-docker
 sudo docker build --no-cache -t fr3-docker .
 ```
 
-
-
+---
 # Part IV — Robot Communication Verification
 
 # Step 13. Command to control robot based on docker 
@@ -546,7 +546,7 @@ Check state:
 ```bash
 ros2 topic echo /fr3/joint_states --qos-reliability reliable --once
 ```
-
+---
 # Part V — Robot Motion Examples
 
 # Step 14. Test robot from one point to the other:
@@ -660,7 +660,7 @@ The actual position of each joint:
                │
             Robot Base
 ```
-
+---
 # Step 16.  Cartesian motion：
 To pick object on the table, cartesian motion is utilized for moving robot downward
 x=[x,y,z,R]T
@@ -673,16 +673,16 @@ ros2 service type /fr3/move_cartesian_sync
 ros2 service type /fr3/move_cartesian_sync
 ros2 interface show franky_msgs/srv/BlockingCartesianMove
 ```
+## 16.1 : Turn left slightly by J1 + 0.5 rad
 
-Step 1: turn left slightly by J1 +0.5 rad
 ```bash
 ros2 service call /fr3/move_joints_sync franky_msgs/srv/BlockingJointMove "{target: {relative: true, positions: [0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}}"
 ```
-Step 2: Usually downward means negative z, (downward 20 cm) so:
+## 16.2 : Usually downward means negative z, (downward 20 cm) so:
 ```bash
 ros2 service call /fr3/move_cartesian_sync franky_msgs/srv/BlockingCartesianMove "{target: {relative: true, pose: {position: {x: 0.0, y: 0.0, z: 0.2}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
 ```
-
+---
 # Part VII — Verification Results
 
 # Verification Purpose
@@ -742,14 +742,12 @@ Using Docker as an independent verification environment provides a reliable meth
 
 ---
 
-
 # References
 
 - Franka Documentation: system image v 5.9.0
 ```bash
 https://franka.de/documents
 ```
-
 
 - ROS 2 Documentation:
 ```bash
