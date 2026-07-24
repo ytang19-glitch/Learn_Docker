@@ -745,9 +745,9 @@ Using Docker as an independent verification environment provides a reliable meth
 
 # References
 
-- Franka Documentation:
+- Franka Documentation: system image v 5.9.0
 ```bash
-[https://franka.de/develop](https://franka.de/hubfs/Operating%20Manual%20Franka%20Research%203_5.9.0_5.9.1_R02216_1.2.3_EN.pdf?hsLang=en)](https://franka.de/hubfs/Operating%20Manual%20Franka%20Research%203_5.10_R02216_1.3_EN.pdf?hsLang=en)
+https://franka.de/documents
 ```
 
 
