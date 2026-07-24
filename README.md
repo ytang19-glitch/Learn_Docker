@@ -1,5 +1,5 @@
 # FR3 Docker & ROS 2 Verification Guide
-
+---
 ## Table of Contents
 
 - [Overview](#overview)
@@ -31,6 +31,7 @@ After completing this tutorial, students should be able to:
 - Troubleshoot common configuration and networking issues.
 - Build a solid foundation for developing their own ROS 2 and MoveIt applications.
 ```
+---
 # Goal
 
 Verify the complete communication pipeline from Docker to the physical Franka FR3 robot while keeping the native Ubuntu workspace independent.
@@ -737,8 +738,9 @@ If both environments exhibit the same issue, the focus should shift to:
 
 Using Docker as an independent verification environment provides a reliable method to distinguish software compatibility issues from hardware or network-related problems.
 
-
 ```
+---
+
 # References
 
 - Franka Documentation:
