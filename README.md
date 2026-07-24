@@ -39,7 +39,11 @@ Verify the complete communication pipeline from Docker to the physical Franka FR
 
 # Part I — Docker Installation
 
-# Learn_Docker
+## Learn_Docker
+
+The original repository provides the Docker environment and software infrastructure for working with the Franka FR3 robot. This tutorial builds upon that environment and reorganizes the setup, configuration, troubleshooting, and robot-control workflow into a step-by-step guide for learning and laboratory use.
+
+Additional explanations, implementation notes, debugging procedures, and examples in this tutorial were developed and documented as part of my own learning and development process.
 
 ```text
 https://github.com/ualberta-robotics/franka-docker/tree/main
