@@ -262,6 +262,96 @@ docker build -t fr3-docker .
 ```bash
 sudo docker images
 ```
+# Part III — Launch the FR3 Driver
+
+# Steps 11 Run the Docker Container
+
+Launch the container:
+
+Container starts robot automatically 
+```bash
+sudo docker run -it --rm \
+     --network host \
+     --privileged \
+     -v ~/franka-docker/franka_ws:/home/user/franka-docker/franka_ws \
+     fr3-docker
+```
+or safe way
+Container starts terminal instead (--entrypoint bash )
+```bash
+sudo docker run -it --rm \
+  --network host \
+  --privileged \
+  -v ~/franka-docker/franka_ws:/home/user/franka-docker/franka_ws \
+  --entrypoint bash \
+  fr3-docker
+```
+
+Parameter explanation:
+
+| Option           | Description                                                        |
+| ---------------- | ------------------------------------------------------------------ |
+| `-it`            | Interactive terminal                                               |
+| `--rm`           | Remove container after exit                                        |
+| `--network host` | Share the host network, allowing direct communication with the FR3 |
+| `--privileged`   | Grant access to hardware interfaces                                |
+| `-v`             | Mount the local ROS 2 workspace inside the container               |
+
+---
+
+# Step 12. start robot driver
+
+Check if the docker(humble) is injetced by the host(jazzy)
+```bash
+cat ~/.bashrc | grep ros
+```
+rebuild workplace of docker:
+```bash
+cd /home/user/franka-docker/franka_ws
+rm -rf build install log
+colcon build
+```
+make sure franky is available
+```bash
+ros2 pkg list | grep franky
+```
+if certificate of ssl is expired:
+```bash
+cd /usr/local/lib/python3.10/dis-packages?panda_py
+nano __init__/py
+```
+
+"ssl_context" like a security rule card we give to the websocket connection.
+
+```bash
+import ssl
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+# Disable certificate verification
+_ssl_context.check_hostname = False
+_ssl_context.verify_mode = ssl.CERT_NONE
+ssl=ssl_context,
+```
+
+franka_bridge is a communication layer between ROS 2 and the real Franka robot.
+```bash
+ros2 launch franky_ros franky_bringup.launch.py robot_ip:=172.16.0.2
+```
+Note: the environment configuration of franka arm 3
+the wire network should align with subnet of configuration
+https://franka.de/hubfs/Hardware%20Manual%20Franka%20Research%203_Arm%20v2.1_R02210_1.3_EN.pdf?hsLang=en (p33)
+
+Troubleshooting: 
+LIbfranka: timeout
+```bash
+https://frankarobotics.github.io/docs/troubleshooting.html
+```
+
+```bash
+changeing the wire changes the phsical connection, changing ip configuration changes
+the logical network
+For robot , both the phsical links and ip subnet must match before communication works 
+```
 
 # Part VI — Troubleshooting
 
@@ -403,96 +493,7 @@ cd ~/franka-docker
 sudo docker build --no-cache -t fr3-docker .
 ```
 
-# Part III — Launch the FR3 Driver
 
-# Steps 11 Run the Docker Container
-
-Launch the container:
-
-Container starts robot automatically 
-```bash
-sudo docker run -it --rm \
-     --network host \
-     --privileged \
-     -v ~/franka-docker/franka_ws:/home/user/franka-docker/franka_ws \
-     fr3-docker
-```
-or safe way
-Container starts terminal instead (--entrypoint bash )
-```bash
-sudo docker run -it --rm \
-  --network host \
-  --privileged \
-  -v ~/franka-docker/franka_ws:/home/user/franka-docker/franka_ws \
-  --entrypoint bash \
-  fr3-docker
-```
-
-Parameter explanation:
-
-| Option           | Description                                                        |
-| ---------------- | ------------------------------------------------------------------ |
-| `-it`            | Interactive terminal                                               |
-| `--rm`           | Remove container after exit                                        |
-| `--network host` | Share the host network, allowing direct communication with the FR3 |
-| `--privileged`   | Grant access to hardware interfaces                                |
-| `-v`             | Mount the local ROS 2 workspace inside the container               |
-
----
-
-# Step 12. start robot driver
-
-Check if the docker(humble) is injetced by the host(jazzy)
-```bash
-cat ~/.bashrc | grep ros
-```
-rebuild workplace of docker:
-```bash
-cd /home/user/franka-docker/franka_ws
-rm -rf build install log
-colcon build
-```
-make sure franky is available
-```bash
-ros2 pkg list | grep franky
-```
-if certificate of ssl is expired:
-```bash
-cd /usr/local/lib/python3.10/dis-packages?panda_py
-nano __init__/py
-```
-
-"ssl_context" like a security rule card we give to the websocket connection.
-
-```bash
-import ssl
-ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-
-# Disable certificate verification
-_ssl_context.check_hostname = False
-_ssl_context.verify_mode = ssl.CERT_NONE
-ssl=ssl_context,
-```
-
-franka_bridge is a communication layer between ROS 2 and the real Franka robot.
-```bash
-ros2 launch franky_ros franky_bringup.launch.py robot_ip:=172.16.0.2
-```
-Note: the environment configuration of franka arm 3
-the wire network should align with subnet of configuration
-https://franka.de/hubfs/Hardware%20Manual%20Franka%20Research%203_Arm%20v2.1_R02210_1.3_EN.pdf?hsLang=en (p33)
-
-Troubleshooting: 
-LIbfranka: timeout
-```bash
-https://frankarobotics.github.io/docs/troubleshooting.html
-```
-
-```bash
-changeing the wire changes the phsical connection, changing ip configuration changes
-the logical network
-For robot , both the phsical links and ip subnet must match before communication works 
-```
 
 # Part IV — Robot Communication Verification
 
@@ -738,8 +739,8 @@ If both environments exhibit the same issue, the focus should shift to:
 
 Using Docker as an independent verification environment provides a reliable method to distinguish software compatibility issues from hardware or network-related problems.
 
-```
 ---
+
 
 # References
 
